@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Login — Domus Bauli{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-sand">
+  <div class="relative min-h-screen">
+    <img src="{% static 'images/bacoli/bacoli-2.jpg' %}" alt="Bacoli" class="absolute inset-0 h-full w-full object-cover">
+    <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70"></div>
+
+    <div class="relative z-10 flex min-h-screen items-center justify-center px-6 py-12 sm:px-10">
+      <div class="absolute top-6 left-1/2 -translate-x-1/2">
+        <img src="{% static 'images/domus-bauli.png' %}" alt="Domus Bauli" class="h-24 w-24 object-contain filter invert brightness-0 sm:h-28 sm:w-28 md:h-36 md:w-36 lg:h-44 lg:w-44 xl:h-48 xl:w-48">
+      </div>
+      <div class="w-full max-w-md">
+        <div class="rounded-3xl border border-white/30 bg-white/95 p-6 shadow-xl shadow-black/10 backdrop-blur sm:p-8">
+          <div class="flex items-start justify-between">
+            <div>
+              <h2 class="text-2xl font-semibold sm:text-3xl">Login</h2>
+              <p class="mt-1 text-sm text-slate-600">Accedi al tuo account.</p>
+            </div>
+          </div>
+
+          {% if error or form.errors %}
+          <div class="mt-5 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            {% if error %}
+              <div>{{ error }}</div>
+            {% endif %}
+            {% for field in form %}
+              {% for error in field.errors %}
+                <div>{{ error }}</div>
+              {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+              <div>{{ error }}</div>
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          <form method="post" class="mt-6 space-y-4">
+            {% csrf_token %}
+            <div>
+              <label for="id_username" class="text-sm font-medium text-slate-700">Email o username</label>
+              <input id="id_username" name="username" type="text" autocomplete="username" value="{{ username_value|default_if_none:'' }}" class="mt-2 w-full rounded-2xl border border-slate-200 bg-sand px-4 py-3 text-sm outline-none focus:border-coral focus:ring-4 focus:ring-coral/20">
+            </div>
+            <div>
+              <label for="id_password" class="text-sm font-medium text-slate-700">Password</label>
+              <input id="id_password" name="password" type="password" autocomplete="current-password" class="mt-2 w-full rounded-2xl border border-slate-200 bg-sand px-4 py-3 text-sm outline-none focus:border-coral focus:ring-4 focus:ring-coral/20">
+            </div>
+            <button type="submit" class="w-full rounded-2xl bg-coral px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-coral/30 hover:bg-[#ff2a51] transition">
+              Accedi
+            </button>
+          </form>
+
+          <div class="mt-6 text-center text-sm text-slate-600">
+            Non hai un account?
+            <a href="{% url 'accounts:register' %}" class="font-semibold text-coral hover:underline">Registrati</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

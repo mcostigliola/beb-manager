@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Domus Bauli{% endblock %}
+
+{% block content %}
+<header class="relative h-screen w-full overflow-hidden">
+  <div class="absolute top-0 left-0 right-0 z-20 p-5">
+    <div class="relative mx-auto max-w-6xl flex items-center justify-end py-6">
+      <img src="{% static 'images/domus-bauli.png' %}" alt="Domus Bauli" class="absolute left-1/2 top-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 object-contain filter invert brightness-0 sm:h-28 sm:w-28 md:h-36 md:w-36 lg:h-[180px] lg:w-[180px]">
+
+      {% if request.user.is_authenticated %}
+      <div class="flex items-center gap-3">
+        <span class="text-sm font-semibold text-white/90">Ciao, {{ request.user.get_username }}</span>
+        <a href="{% url 'accounts:logout' %}" class="rounded-full border border-white/60 px-5 py-3 text-sm font-semibold text-white/90 hover:bg-white/10 transition">
+          Logout
+        </a>
+      </div>
+      {% else %}
+      <a href="{% url 'accounts:login' %}" class="rounded-full border border-white/60 px-5 py-3 text-sm font-semibold text-white/90 hover:bg-white/10 transition">
+        Login
+      </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="absolute inset-0">
+    <div id="heroParallax" class="h-full w-full will-change-transform">
+      <img id="heroSlide" src="{% static 'images/bacoli/bacoli-1.jpg' %}" class="hero-slide h-full w-full object-cover opacity-100 animate-slowZoom" alt="Bacoli panorama">
+    </div>
+  </div>
+  <div class="absolute inset-0 bg-gradient-to-b from-black/65 via-black/45 to-black/60"></div>
+
+  <div class="relative z-10 flex h-full items-center justify-center px-6">
+    <div class="max-w-2xl text-center text-white">
+      <h1 class="text-3xl sm:text-4xl md:text-6xl font-semibold tracking-tight font-serif animate-fadeUp">Domus Bauli</h1>
+      <p class="mt-3 sm:mt-4 text-base sm:text-lg md:text-xl text-white/85 leading-relaxed animate-fadeUp" style="animation-delay: 120ms;">
+        Il tuo rifugio a Bacoli: mare, storia e silenzio. Prenota in pochi secondi, conferma immediata.
+      </p>
+      <a href="#prenota" class="mt-6 sm:mt-8 inline-flex items-center justify-center rounded-full bg-coral px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base font-semibold text-white shadow-xl shadow-coral/30 hover:translate-y-[-1px] hover:bg-[#ff2a51] transition animate-fadeUp" style="animation-delay: 240ms;">
+        Prenota un soggiorno
+      </a>
+    </div>
+  </div>
+</header>
+
+<section class="mx-auto max-w-6xl px-4 py-12 sm:py-14">
+  <div class="flex items-end justify-between gap-4">
+    <div>
+      <h2 class="text-2xl md:text-3xl font-semibold font-serif">Galleria</h2>
+      <p class="mt-2 text-slate-600">Scorci di Bacoli e della zona.</p>
+    </div>
+    <div class="hidden sm:flex items-center gap-2">
+      <button id="galleryPrev" class="h-10 w-10 rounded-full border border-slate-200 bg-white text-ink shadow-sm hover:bg-slate-50 transition" aria-label="Scorri indietro">
+        ‹
+      </button>
+      <button id="galleryNext" class="h-10 w-10 rounded-full border border-slate-200 bg-white text-ink shadow-sm hover:bg-slate-50 transition" aria-label="Scorri avanti">
+        ›
+      </button>
+    </div>
+  </div>
+
+  <div id="galleryTrack" class="mt-6 flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2">
+    <img class="aspect-square w-56 shrink-0 snap-start rounded-2xl object-cover sm:w-64 md:w-72" src="{% static 'images/bacoli/bacoli-1.jpg' %}" alt="Bacoli 1" loading="lazy">
+    <img class="aspect-square w-56 shrink-0 snap-start rounded-2xl object-cover sm:w-64 md:w-72" src="{% static 'images/bacoli/bacoli-2.jpg' %}" alt="Bacoli 2" loading="lazy">
+    <img class="aspect-square w-56 shrink-0 snap-start rounded-2xl object-cover sm:w-64 md:w-72" src="{% static 'images/bacoli/bacoli-3.jpg' %}" alt="Bacoli 3" loading="lazy">
+    <img class="aspect-square w-56 shrink-0 snap-start rounded-2xl object-cover sm:w-64 md:w-72" src="{% static 'images/bacoli/bacoli-4.jpg' %}" alt="Bacoli 4" loading="lazy">
+    <img class="aspect-square w-56 shrink-0 snap-start rounded-2xl object-cover sm:w-64 md:w-72" src="{% static 'images/bacoli/casevecchie.jpeg' %}" alt="Bacoli casevecchie" loading="lazy">
+    <img class="aspect-square w-56 shrink-0 snap-start rounded-2xl object-cover sm:w-64 md:w-72" src="{% static 'images/bacoli/lago.jpeg' %}" alt="Bacoli lago" loading="lazy">
+    <img class="aspect-square w-56 shrink-0 snap-start rounded-2xl object-cover sm:w-64 md:w-72" src="{% static 'images/bacoli/casina-vanv.jpeg' %}" alt="Casina Vanvitelliana" loading="lazy">
+    <img class="aspect-square w-56 shrink-0 snap-start rounded-2xl object-cover sm:w-64 md:w-72" src="{% static 'images/bacoli/casvanv.jpeg' %}" alt="Casina Vanvitelliana 2" loading="lazy">
+    <img class="aspect-square w-56 shrink-0 snap-start rounded-2xl object-cover sm:w-64 md:w-72" src="{% static 'images/bacoli/garibaldi.jpeg' %}" alt="Piazza Garibaldi" loading="lazy">
+    <img class="aspect-square w-56 shrink-0 snap-start rounded-2xl object-cover sm:w-64 md:w-72" src="{% static 'images/bacoli/castello.jpeg' %}" alt="Castello" loading="lazy">
+    <img class="aspect-square w-56 shrink-0 snap-start rounded-2xl object-cover sm:w-64 md:w-72" src="{% static 'images/bacoli/montagna.jpeg' %}" alt="Panorama montagna" loading="lazy">
+    <img class="aspect-square w-56 shrink-0 snap-start rounded-2xl object-cover sm:w-64 md:w-72" src="{% static 'images/bacoli/scaler.jpeg' %}" alt="Scalinata" loading="lazy">
+    <img class="aspect-square w-56 shrink-0 snap-start rounded-2xl object-cover sm:w-64 md:w-72" src="{% static 'images/bacoli/puntapenn.jpeg' %}" alt="Punta Pennata" loading="lazy">
+  </div>
+</section>
+
+<section id="prenota" class="bg-white border-t border-slate-200">
+  <div class="mx-auto max-w-6xl px-4 py-10 sm:py-12">
+    <h2 class="text-2xl md:text-3xl font-semibold font-serif">Prenota</h2>
+    <p class="mt-2 text-slate-600">Sezione prenotazione (poi mettiamo date + pagamento).</p>
+  </div>
+</section>
+
+<script>
+  const slides = [
+    "{% static 'images/bacoli/bacoli-1.jpg' %}",
+    "{% static 'images/bacoli/bacoli-2.jpg' %}",
+    "{% static 'images/bacoli/bacoli-3.jpg' %}",
+    "{% static 'images/bacoli/bacoli-4.jpg' %}",
+    "{% static 'images/bacoli/casevecchie.jpeg' %}",
+    "{% static 'images/bacoli/lago.jpeg' %}",
+    "{% static 'images/bacoli/casina-vanv.jpeg' %}",
+    "{% static 'images/bacoli/casvanv.jpeg' %}",
+    "{% static 'images/bacoli/garibaldi.jpeg' %}",
+    "{% static 'images/bacoli/castello.jpeg' %}",
+    "{% static 'images/bacoli/montagna.jpeg' %}",
+    "{% static 'images/bacoli/scaler.jpeg' %}",
+    "{% static 'images/bacoli/puntapenn.jpeg' %}"
+  ];
+  const hero = document.getElementById("heroSlide");
+  const heroParallax = document.getElementById("heroParallax");
+  let idx = 0;
+  const parallax = () => {
+    if (!heroParallax) return;
+    const offset = Math.min(window.scrollY * 0.25, 180);
+    heroParallax.style.transform = `translateY(${offset}px)`;
+  };
+  window.addEventListener("scroll", parallax, { passive: true });
+  parallax();
+  setInterval(() => {
+    idx = (idx + 1) % slides.length;
+    hero.classList.add("opacity-0");
+    setTimeout(() => {
+      hero.src = slides[idx];
+      hero.classList.remove("opacity-0");
+    }, 500);
+  }, 6000);
+
+  const galleryTrack = document.getElementById("galleryTrack");
+  const galleryPrev = document.getElementById("galleryPrev");
+  const galleryNext = document.getElementById("galleryNext");
+  if (galleryTrack && galleryPrev && galleryNext) {
+    const step = () => Math.min(galleryTrack.clientWidth * 0.9, 420);
+    galleryPrev.addEventListener("click", () => {
+      galleryTrack.scrollBy({ left: -step(), behavior: "smooth" });
+    });
+    galleryNext.addEventListener("click", () => {
+      galleryTrack.scrollBy({ left: step(), behavior: "smooth" });
+    });
+  }
+</script>
+{% endblock %}
